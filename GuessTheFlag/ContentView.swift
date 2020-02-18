@@ -10,14 +10,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        HStack {
-            Color.red.frame(width: 100, height: 200, alignment: .center)
-
-            Text("FRANCE")
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.white,.black]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
             
-            Color.blue.frame(width: 100, height: 200, alignment: .center)
+            Button(action: {
+                print("button tapped")
+            }) {
+            HStack {
+                Image(systemName: "pencil")
+                    .resizable()
+                    .frame(width: 40.0, height: 40.0)
+                Text("Edit")
+                    .font(.largeTitle)
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(30, antialiased: true)
+            }
         }
-    .cornerRadius(20, antialiased: true)
     }
 }
 
