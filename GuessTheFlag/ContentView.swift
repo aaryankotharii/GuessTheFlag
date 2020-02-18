@@ -10,8 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, World!")
-        .bold()
+        HStack {
+            Color.red.frame(width: 100, height: 200, alignment: .center)
+
+            Text("FRANCE")
+            
+            Color.blue.frame(width: 100, height: 200, alignment: .center)
+        }
+    .cornerRadius(20, antialiased: true)
     }
 }
 
