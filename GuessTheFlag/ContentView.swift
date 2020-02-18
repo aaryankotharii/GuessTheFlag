@@ -11,7 +11,9 @@ import SwiftUI
 struct ContentView: View {
     @State private var showingAlert = false
     var body: some View {
-         
+        Button("Show Alert"){
+            self.showingAlert = true
+        }
         .alert(isPresented: $showingAlert){
             
             Alert(title: Text("This is an Alert"), message: Text("you can press okay"), dismissButton: .default(Text("Okay")))
