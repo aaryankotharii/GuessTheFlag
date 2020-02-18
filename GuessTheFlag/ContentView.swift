@@ -9,25 +9,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showingAlert = false
     var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [.white,.black]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
+         
+        .alert(isPresented: $showingAlert){
             
-            Button(action: {
-                print("button tapped")
-            }) {
-            HStack {
-                Image(systemName: "pencil")
-                    .resizable()
-                    .frame(width: 40.0, height: 40.0)
-                Text("Edit")
-                    .font(.largeTitle)
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(30, antialiased: true)
-            }
+            Alert(title: Text("This is an Alert"), message: Text("you can press okay"), dismissButton: .default(Text("Okay")))
         }
+        
+
+        
     }
 }
 
