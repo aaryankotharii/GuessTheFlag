@@ -15,18 +15,24 @@ struct ContentView: View {
     
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var alertMessage = ""
+    @State private var currentScore = 0
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue,.black]), startPoint: .top, endPoint: .bottom)
         VStack{
-            VStack {
+            VStack(spacing: 25) {
                 Text("Tap the flag of")
+                    .font(.largeTitle)
+                    .fontWeight(.thin)
                     .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
                 Text("\(countries[correctAnswer])")
                     .foregroundColor(.white)
                     .font(.largeTitle)
                     .fontWeight(.black)
             }
+            .padding(70)
         ForEach(0..<3){ number in
             Button(action: {
                 self.flagTapped(number)
@@ -38,12 +44,16 @@ struct ContentView: View {
                     .overlay(Capsule().stroke(Color.black, lineWidth: 1))
                     .shadow(color: Color.black, radius: 2)
                     }
+            .padding(10)
                 }
             Spacer()
+            Text("Score:- \(currentScore)")
+                .foregroundColor(Color.white)
+            .padding(20)
             }
             
         .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")){
+            Alert(title: Text(scoreTitle), message: Text(alertMessage), dismissButton: .default(Text("Continue")){
                 self.askQuestion()
                 })
             }
@@ -53,10 +63,13 @@ struct ContentView: View {
     
     func flagTapped(_ number : Int){
         if number == correctAnswer {
-            scoreTitle = "Correct"
+            currentScore += 1
+            scoreTitle = "Correct!"
+            alertMessage = ""
         }
         else{
-            scoreTitle = "Wrong"
+            scoreTitle = "Wrong!"
+            alertMessage = "That was the flag of \(countries[number])"
         }
         showingScore = true
     }
