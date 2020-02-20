@@ -16,7 +16,11 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var alertMessage = ""
+    @State private var buttonText = ""
     @State private var currentScore = 0
+    @State private var questionNumber = 1
+    
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue,.black]), startPoint: .top, endPoint: .bottom)
@@ -47,29 +51,43 @@ struct ContentView: View {
             .padding(10)
                 }
             Spacer()
+            Text("Question \(questionNumber)")
+                .foregroundColor(Color.green)
             Text("Score:- \(currentScore)")
                 .foregroundColor(Color.white)
-            .padding(20)
+                .padding()
             }
             
         .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text(alertMessage), dismissButton: .default(Text("Continue")){
-                self.askQuestion()
+            Alert(title: Text(scoreTitle), message: Text(alertMessage), dismissButton: .default(Text(buttonText)){
+                    self.askQuestion()
+                    self.questionNumber += 1
+                
                 })
-            }
+        }
         }
        .edgesIgnoringSafeArea(.all)
     }
     
     func flagTapped(_ number : Int){
+        print("flag is tapped")
         if number == correctAnswer {
             currentScore += 1
             scoreTitle = "Correct!"
             alertMessage = ""
+            buttonText = "Continue"
+            print("correct answer")
         }
         else{
             scoreTitle = "Wrong!"
             alertMessage = "That was the flag of \(countries[number])"
+            buttonText = "Continue"
+            print("wrong answer")
+        }
+        if questionNumber > 2 {
+             currentScore = 0
+             questionNumber = 0
+            print("Q>2")
         }
         showingScore = true
     }
@@ -77,8 +95,10 @@ struct ContentView: View {
     func askQuestion(){
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        print(questionNumber)
     }
-}
+    }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
